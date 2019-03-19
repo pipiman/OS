@@ -1,0 +1,29 @@
+Build command failed.
+Error while executing process /home/pipiman/Android/Sdk/cmake/3.6.4111459/bin/cmake with arguments {--build /home/pipiman/Note/MyApplication/app/.externalNativeBuild/cmake/debug/x86_64 --target native-lib}
+[1/2] Building CXX object CMakeFiles/native-lib.dir/native-lib.cpp.o
+[2/2] Linking CXX shared library /home/pipiman/Note/MyApplication/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so
+FAILED: : && /home/pipiman/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++  --target=x86_64-none-linux-android21 --gcc-toolchain=/home/pipiman/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/pipiman/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot -fPIC -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security -stdlib=libc++  -std=gnu++11 -O0 -fno-limit-debug-info  -Wl,--exclude-libs,libgcc.a -Wl,--exclude-libs,libatomic.a -static-libstdc++ -Wl,--build-id -Wl,--warn-shared-textrel -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now -shared -Wl,-soname,libnative-lib.so -o /home/pipiman/Note/MyApplication/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so CMakeFiles/native-lib.dir/native-lib.cpp.o  -llog -latomic -lm && :
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:46: error: undefined reference to 'cv::Mat::Mat(cv::Mat const&, cv::Rect_<int> const&)'
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:47: error: undefined reference to 'cv::Mat::Mat(cv::Mat const&, cv::Rect_<int> const&)'
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:49: error: undefined reference to 'cv::transpose(cv::_InputArray const&, cv::_OutputArray const&)'
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:50: error: undefined reference to 'cv::flip(cv::_InputArray const&, cv::_OutputArray const&, int)'
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:51: error: undefined reference to 'cv::transpose(cv::_InputArray const&, cv::_OutputArray const&)'
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:52: error: undefined reference to 'cv::flip(cv::_InputArray const&, cv::_OutputArray const&, int)'
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:54: error: undefined reference to 'cv::Mat::zeros(int, int, int)'
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:55: error: undefined reference to 'cv::Mat::zeros(int, int, int)'
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:82: error: undefined reference to 'cv::transpose(cv::_InputArray const&, cv::_OutputArray const&)'
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:83: error: undefined reference to 'cv::flip(cv::_InputArray const&, cv::_OutputArray const&, int)'
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:84: error: undefined reference to 'cv::transpose(cv::_InputArray const&, cv::_OutputArray const&)'
+/home/pipiman/Note/MyApplication/app/src/main/cpp/native-lib.cpp:85: error: undefined reference to 'cv::flip(cv::_InputArray const&, cv::_OutputArray const&, int)'
+/home/pipiman/OpenCV-android-sdk/sdk/native/jni/include/opencv2/core/mat.inl.hpp:501: error: undefined reference to 'cv::error(int, cv::String const&, char const*, char const*, int)'
+/home/pipiman/OpenCV-android-sdk/sdk/native/jni/include/opencv2/core/mat.inl.hpp:514: error: undefined reference to 'cv::error(int, cv::String const&, char const*, char const*, int)'
+/home/pipiman/OpenCV-android-sdk/sdk/native/jni/include/opencv2/core/mat.inl.hpp:521: error: undefined reference to 'cv::Mat::updateContinuityFlag()'
+/home/pipiman/OpenCV-android-sdk/sdk/native/jni/include/opencv2/core/mat.inl.hpp:696: error: undefined reference to 'cv::fastFree(void*)'
+/home/pipiman/OpenCV-android-sdk/sdk/native/jni/include/opencv2/core/cvstd.hpp:602: error: undefined reference to 'cv::String::allocate(unsigned long)'
+/home/pipiman/OpenCV-android-sdk/sdk/native/jni/include/opencv2/core/cvstd.hpp:648: error: undefined reference to 'cv::String::deallocate()'
+/home/pipiman/OpenCV-android-sdk/sdk/native/jni/include/opencv2/core/mat.inl.hpp:808: error: undefined reference to 'cv::Mat::deallocate()'
+/home/pipiman/OpenCV-android-sdk/sdk/native/jni/include/opencv2/core/cvstd.hpp:656: error: undefined reference to 'cv::String::deallocate()'
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+ninja: build stopped: subcommand failed.
+
+

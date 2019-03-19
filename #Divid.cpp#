@@ -1,0 +1,162 @@
+#include"Divid.h"
+
+dividedM::dividedM(Mat &src,float press,float h_up,float h_down, float w)
+{
+	this->src = src;
+	this->press = press;
+	this->hor_up = h_up;
+	this->hor_down = h_down;
+	this->ver_rate = w;
+	hei = src.size().height;
+	wid = src.size().width;
+
+	subhei = wid / 2;
+	subwid = hei;
+}
+
+void dividedM::pace1(){
+
+  left = Mat(src, Rect(0, 0, wid / 2, hei));
+  right = Mat(src, Rect(wid / 2, 0, wid / 2, hei));
+
+  transpose(left, left);
+  flip(left, left, 1);
+  transpose(right, right);
+  flip(right, right, 0);
+
+  
+  pace3(left);
+
+  
+}
+
+void dividedM::pace2(){
+
+   Mat im1Gray, im2Gray;
+  cvtColor(left, im1Gray, COLOR_BGR2GRAY);
+  cvtColor(right, im2Gray, COLOR_BGR2GRAY);
+
+    std::vector<KeyPoint> keypoints1, keypoints2;
+  Mat descriptors1, descriptors2;
+   
+  // Detect ORB features and compute descriptors.
+  Ptr<Feature2D> orb = ORB::create(MAX_FEATURES);
+  orb->detectAndCompute(im1Gray, Mat(), keypoints1, descriptors1);
+  orb->detectAndCompute(im2Gray, Mat(), keypoints2, descriptors2);
+   
+  // Match features.
+  std::vector<DMatch> matches;
+  Ptr<DescriptorMatcher> matcher = DescriptorMatcher::create("BruteForce-Hamming");
+  matcher->match(descriptors1, descriptors2, matches, Mat());
+   
+  // Sort matches by score
+  std::sort(matches.begin(), matches.end());
+   
+  // Remove not so good matches
+  const int numGoodMatches = matches.size() * GOOD_MATCH_PERCENT;
+  matches.erase(matches.begin()+numGoodMatches, matches.end());
+
+  // Extract location of good matches && calcue the distence on a line
+  std::vector<Point2f> points1, points2;
+
+  double add = 0;
+  
+  for( size_t i = 0; i < matches.size(); i++ )
+  {
+    points1.push_back( keypoints1[ matches[i].queryIdx ].pt );
+    points2.push_back( keypoints2[ matches[i].trainIdx ].pt );
+
+    // printf("point1.x=%f,point1.y=%f",points1[i].x,points1[i].y);
+
+    add += points1[i].y - points2[i].y;
+  }
+
+  //calculate the averge distence
+  add /= matches.size();
+  add /= 2;
+
+  Mat temp(hei,wid,left.type());
+  
+  if(add >0){
+
+    int moveVec = subhei - add*1;
+
+    right = Mat(right,Rect(0, 0, subwid, moveVec));
+    left = Mat(left,Rect(0, subhei - moveVec, subwid, moveVec));
+
+    Mat submat
+  }
+  else if(add < 0){
+  }
+  else {
+  }
+
+}
+
+/*Mat dcolorComb::C_adjust(Mat & inputL, Mat & inputR)
+{
+	int dh = int(((float)hei- dhei*2)*hor_rate);
+	int dw = int((float)wid*ver_rate);
+	int orwid = inputL.size().width;
+	int orhei = inputL.size().height;
+	
+	inputL = Mat(inputL, Rect(dw, dh+ dhei, wid/2-2*dw, hei - 2 * (dh+dhei)));
+	inputR = Mat(inputR, Rect(dw, dh + dhei, wid/2 - 2 * dw, hei - 2 * (dh + dhei)));
+
+	cv::resize(inputL,inputL,cv::Size(orwid,orhei),0,0,INTER_LINEAR);
+	cv::resize(inputR,inputR,cv::Size(orwid,orhei),0,0,INTER_LINEAR);
+
+	int totalCols = inputL.cols + inputR.cols;
+	Mat mergedDescriptors(hei, wid, inputL.type());
+	Mat submat = mergedDescriptors.rowRange(0,inputL.rows).colRange(0,inputL.cols);
+	inputL.copyTo(submat);
+	submat = mergedDescriptors.rowRange(0,inputL.rows).colRange(inputL.cols, totalCols);
+	inputR.copyTo(submat);
+
+	return mergedDescriptors;
+
+}
+
+Mat dcolorComb::process()
+{
+
+	Mat out_T = T_adjust(this->src);
+
+	return out_T;
+}
+*/
+
+void dividedM::pace3(Mat &img){
+
+ 
+  double pare = tan(press * 3.1415926 / 360);
+   dwid = int(subhei * pare);
+ 
+  vector<Point2f> src_corners(4);
+  vector<Point2f> dst_corners(4);
+
+  src_corners[0]= Point2f(0,0);
+  src_corners[1]= Point2f(subwid - 1,0);
+  src_corners[2]= Point2f(0, subhei - 1);
+  src_corners[3]= Point2f(subwid - 1, subhei - 1);
+
+  dst_corners[0]= Point2f(dwid,0);
+  dst_corners[1]= Point2f(subwid - 1 - dwid,0);
+  dst_corners[2]= Point2f(0, subhei - 1);
+  dst_corners[3]= Point2f(subwid - 1, subhei - 1);
+
+
+  Mat transMtx = getPerspectiveTransform(src_corners, dst_corners);
+ 
+  warpPerspective(img, img, transMtx, Size(subwid, subhei));
+
+  /*test
+  printf("rows & cols:%d,%d\nhei & wid:%d,%d\n",img.rows,img.cols,subhei,subwid);
+
+  
+ string outFilename("pressed.jpg");
+  cout << "Saving pressed image : " << outFilename << endl; 
+  imwrite(outFilename, img);
+  */
+  return ;
+}

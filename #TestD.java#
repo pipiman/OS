@@ -1,0 +1,10 @@
+import Dcolor;
+
+public class TestD{
+
+    static{
+
+	System.load("/home/pipiman/libopencv_java401.so");
+	System.load("/home/pipiman/dcres/")
+    }
+}
